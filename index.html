@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Distillation of Diffusion Features for Semantic Correspondence.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DistillDIFT: Distillation of Diffusion Features for Semantic Correspondence</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.ico">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://cleandift.github.io">
+            🧹 CleanDIFT
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"><span class="rainbow-text">DistillDIFT: </span>Distillation of Diffusion Features for Semantic Correspondence</h1>
+          <style>
+            .rainbow-text {
+              background: linear-gradient(-200deg, rgb(80, 199, 239), rgb(118, 90, 222), rgb(209, 75, 230), rgb(224, 56, 202), red, orange, yellow);
+              background-clip: text;
+              -webkit-background-clip: text;
+              color: transparent;
+            }
+          </style>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://ffundel.de/">Frank Fundel</a>,</span>
+            <span class="author-block">
+              <a href="https://johfischer.com/">Johannes Schusterbauer</a>,</span>
+            <span class="author-block">
+              <a href="https://taohu.me/">Vincent Tao Hu</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://ommer-lab.com/people/ommer/">Björn Ommer</a>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">CompVis @ LMU Munich, MCML</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">WACV 2025</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/XXX"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/FrankFundel/CompVisDistillDIFT"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-half"></div>
+        <div class="column is-half">
+          <h2 class="title is-3 has-text-centered">TLDR;</h2>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-half">
+          <img src="./static/images/final_results.png" alt="TLDR Image" width="100%">
+        </div>
+        <div class="column is-half">
+          <div class="content has-text-justified">
+          <p>
+            We present DistillDIFT, a highly efficient approach to semantic correspondence that delivers state-of-the-art performance with 
+            significantly reduced computational cost. Unlike traditional methods that combine multiple large generative models, 
+            DistillDIFT uses a novel distillation technique to unify the strengths of two vision foundation models into a single, 
+            streamlined model. By integrating 3D data without requiring human annotations, DistillDIFT further improves accuracy.
+          </p>
+          <p>
+            Overall, our empirical results demonstrate that our distilled model with 3D data augmentation achieves performance superior
+            to current state-of-the-art methods while significantly reducing computational load and enhancing practicality for real-world 
+            applications, such as semantic video correspondence.
+          </p>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+</section>
+
+<section class="section">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <!-- Method -->
+          <h2 class="title is-3">Method</h2>
+          <img src="./static/images/method_fig.png"
+               alt="Method"
+               width="100%">
+          <div class="content has-text-justified">
+            <p>
+              <strong>Illustration of our multi-teacher distillation framework (a) and 3D data augmentation method (b).</strong> 
+              We distill two complementary models, DINOv2 and SDXL Turbo, into one single and more efficient model. 
+              Using unsupervised 3D data augmentation we further refine our distilled model to achieve new state-of-the-art in both throughput and performance.
+            </p>
+          </div>
+          <br><br>
+
+          <!-- Results -->
+          <h2 class="title is-3">Results</h2>
+          <img src="./static/images/results.png"
+               alt="Results"
+               width="80%">
+          <div class="content has-text-justified">
+            <p>
+              <strong>Comparison of total parameter count, throughput (images per second) on a single <em>NVIDIA A100 80GB</em> and performance on different datasets.</strong> Performance is measured in <i>PCK<sub>bbox</sub>@0.1</i> <em>per point</em>, averaged over all points for PF-WILLOW and CUB200,
+              and averaged over classes for SPair-71k. <sup>†</sup>: Pose-align can only be applied to datasets that include keypoint-specific labels. The best performances are <strong>bold</strong>, while the second-best are <u>underlined</u>.
+            </p>
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+
+    <!-- Qualitative Examples -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Qualitative Examples</h2>
+
+        <!-- Correspondences -->
+        <h3 class="title is-4">Semantic Correspondence</h3>
+        <div class="content has-text-justified">
+          <p>
+            Examples image pairs from SPair-71k with predicted correspondences of different methods. <span style="color:green;">Green</span> indicates correct, while <span style="color:red;">red</span> indicates incorrect according to <i>PCK<sub>bbox</sub>@0.1</i>. <i>(840 × 840)</i> was used as input resolution for DINOv2.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <img src="./static/images/examples.png"
+               alt="Semantic Correspondence"
+               width="100%">
+        </div>
+
+        <!-- Video -->
+        <h3 class="title is-4">Video Correspondence</h3>
+        <div class="content has-text-justified">
+          <p>
+            Video correspondence sample, showing accurate correspondences at a high frame rate. We use source points on the first frame to calculate the corresponding points on all other frames at almost 30 FPS on an NVIDIA A100 80GB.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="./static/videos/kangaroo_out.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{fundel2025distilldift,
+  author    = {Fundel, Frank and Schusterbauer, Johannes and Hu, Vincent Tao and Ommer, Björn},
+  title     = {Distillation of Diffusion Features for Semantic Correspondence},
+  journal   = {WACV},
+  year      = {2025},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer pt-4 pb-0">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>Website template based on <a
+            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> and licensed under <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/4.0/">CCC-BY-SA-4.0</a>
+          <p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
