@@ -14,7 +14,7 @@
     <a href="https://compvis.github.io/distilldift">
         <img src="assets/badge-website.svg" alt="Website">
     </a>
-    <a href="https://arxiv.org/abs/XXX">
+    <a href="https://arxiv.org/abs/2412.03512">
         <img src="https://img.shields.io/badge/arXiv-PDF-b31b1b" alt="Paper">
     </a>
 </p>
@@ -108,7 +108,7 @@ Please cite our paper:
 
 ```bibtex
 @article{fundel2025distilldift,
-  author    = {Fundel, Frank and Schusterbauer, Johannes and Hu, Vincent Tao and Ommer, Björn},
+  author    = {Frank Fundel and Johannes Schusterbauer and Vincent Tao Hu and Björn Ommer},
   title     = {Distillation of Diffusion Features for Semantic Correspondence},
   journal   = {WACV},
   year      = {2025},
