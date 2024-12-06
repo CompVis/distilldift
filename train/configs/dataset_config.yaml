@@ -1,0 +1,35 @@
+# Dataset configuration file for the datasets
+# See README.md for more details
+
+############ Corresondence Datasets ############
+
+SPair-71k:
+  path: "data/SPair-71k"
+  random_sampling: true
+
+PF-WILLOW:
+  path: "data/PF-WILLOW"
+  random_sampling: true
+
+CUB-200-2011:
+  path: "data/CUB_200_2011"
+  num_samples: 1000
+  random_sampling: true
+
+CO3D:
+  path: "data/co3d"
+  random_sampling: true
+
+############ Image Datasets ############
+
+ImageNet:
+  path: "data/ILSVRC"
+  random_sampling: true
+  normalize_image: true
+
+COCO:
+  path: "data/coco"
+  embeddings_path: "cache/COCO_embeddings.pth"
+  random_sampling: true
+  num_samples: 12000
+  hdf5_path: "cache/COCO.h5"

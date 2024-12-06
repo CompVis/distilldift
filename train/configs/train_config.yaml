@@ -1,0 +1,130 @@
+# Configuration file for the models
+# See README.md for more details
+
+############ Training ############
+
+distilled_s:
+  image_size: [336, 336]
+  image_range: [0, 1]
+  rank: 8
+  lora_layers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  optimize_modules: ['lora'] # everything else is frozen
+
+  batch_size: 1
+  num_epochs: 25
+  learning_rate: 0.0001
+  mode: "train"
+  scheduler_type: "constant"
+  similarity_method: "soft_argmax"
+  loss_function: "mse"
+  half_precision: false
+  checkpoint_percent: 1.0
+  softmax_temperature: 0.01
+  softargmax_beta: 1000.0
+
+
+############ Distillation ############
+
+distilled_ws:
+  image_size: [434, 434]
+  image_range: [0, 1]
+
+  teacher1_config:
+    model: "ensemble_ts"
+    model_config:
+      image_size: [980, 980]
+      image_range: [-1, 1]
+      batch_size: 8
+      model: "stabilityai/sdxl-turbo"
+      layers: [1]
+      steps: [51, 101, 151, 201]
+      ensemble_size: 4
+      random_cropping: false
+  
+  teacher2_config:
+    model: 'dinov2_b14_reg'
+    model_config:
+      image_size: [434, 434]
+      image_range: [0, 1]
+      batch_size: 32
+      version: 2
+      model_size: 'b'
+      patch_size: 14
+      registers: true
+      layers: [11]
+
+  student_name: "distilled_model"
+  student_config:
+    rank: 8
+    lora_layers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    lora_dropout: 0.05
+    optimize_modules: ['lora'] # everything else is frozen
+
+  batch_size: 1
+  num_epochs: 10
+  learning_rate: 0.0001
+  weight_decay: 0.05
+  softmax_temperature: 0.01
+  step_percent: 5.0
+  step_gamma: 0.1
+  checkpoint_percent: 1.0
+
+  mode: "distill"
+  scheduler_type: "step"
+  sampling_method: "full"
+  similarity_method: "softmax"
+  loss_function: "cross_entropy"
+  half_precision: false
+  image_sampling: "ground_truth"
+
+distilled_us:
+  image_size: [434, 434]
+  image_range: [0, 1]
+
+  teacher1_config:
+    model: "ensemble_ts"
+    model_config:
+      image_size: [980, 980]
+      image_range: [-1, 1]
+      batch_size: 8
+      model: "stabilityai/sdxl-turbo"
+      layers: [1]
+      steps: [51, 101, 151, 201]
+      ensemble_size: 4
+      random_cropping: false
+  
+  teacher2_config:
+    model: 'dinov2_b14_reg'
+    model_config:
+      image_size: [434, 434]
+      image_range: [0, 1]
+      batch_size: 32
+      version: 2
+      model_size: 'b'
+      patch_size: 14
+      registers: true
+      layers: [11]
+
+  student_name: "distilled_model"
+  student_config:
+    rank: 8
+    lora_layers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    lora_dropout: 0.05
+    optimize_modules: ['lora'] # everything else is frozen
+
+  batch_size: 1
+  num_epochs: 10
+  learning_rate: 0.0001
+  weight_decay: 0.05
+  softmax_temperature: 0.001 # 0.1, 0.05, !0.01!, 0.001
+  step_percent: 5.0
+  step_gamma: 0.1
+  checkpoint_percent: 1.0
+
+  mode: "distill"
+  scheduler_type: "step"
+  sampling_method: "full"
+  similarity_method: "softmax"
+  loss_function: "cross_entropy"
+  image_sampling: "retrieval"
+  half_precision: false

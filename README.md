@@ -41,17 +41,12 @@ cd DistillDIFT
 ## 🔬 Evaluation on SPair-71K
 Our evaluation pipeline for SPair-71K is based on [Telling-Left-From-Right](https://github.com/Junyi42/geoaware-sc) for better comparability.
 
-So, first follow their environment setup and data preparation, don't forget to first:
+Follow their environment setup and data preparation, don't forget to first:
 ```bash
 cd eval
 ```
 
-Then download the LoRA weights for the desired model via
-```bash
-wget https://ommer-lab.com/files/distilldift/distilldift_us.ckpt -P checkpoints/
-```
-
-And finally, run the evaluation script via
+And then run the evaluation script via
 ```bash
 bash eval_distilldift.sh
 ```
@@ -80,15 +75,14 @@ python embed.py --dataset_name COCO
 And run the training via
 - Unsupervised Distillation
     ```bash
-    accelerate launch --multi_gpu --num_processes 4 train.py distilled_us --dataset_name COCO --use_cache --parallel_cache
-    ```
+    accelerate launch --multi_gpu --num_processes 4 train.py distilled_us --dataset_name COCO --use_cache
 - Weakly Supervised Distillation
     ```bash
-    accelerate launch --multi_gpu --num_processes 4 train.py distilled_ws --dataset_name SPair-71k --use_cache --parallel_cache
+    accelerate launch --multi_gpu --num_processes 4 train.py distilled_ws --dataset_name SPair-71k --use_cache
     ```
 - Supervised Training
     ```bash
-    accelerate launch --multi_gpu --num_processes 4 train.py distilled_s --dataset_name SPair-71k --use_cache --parallel_cache
+    accelerate launch --multi_gpu --num_processes 4 train.py distilled_s --dataset_name SPair-71k --use_cache
     ```
 
 ### Refinement using CO3D
@@ -99,7 +93,7 @@ python datasets/create_co3d.py
 
 And run the training via
 ```bash
-accelerate launch --multi_gpu --num_processes 4 train.py distilled_s --dataset_name CO3D --use_cache --parallel_cache
+accelerate launch --multi_gpu --num_processes 4 train.py distilled_s --dataset_name CO3D --use_cache
 ```
 
 ## 🎓 Citation

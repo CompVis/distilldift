@@ -1,0 +1,15 @@
+__pycache__
+.DS_Store
+env
+data
+checkpoints
+cache
+analysis_data
+example_flip_images
+co3d
+plot.ipynb
+
+*.pt
+*.pth
+*.hdf5
+*.h5

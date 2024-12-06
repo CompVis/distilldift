@@ -1,0 +1,21 @@
+NOTE: 'distilldift_us'
+DATASET_DIR: "./data/SPair-71k/JPEGImages"
+NOT_WANDB: true
+KPT_RESULT: true # per keypoint
+COMPUTE_GEOAWARE_METRICS: false
+
+SOFT_EVAL: true
+SOFT_EVAL_WINDOW: 5
+ADAPT_FLIP: false
+MUTUAL_NN: false
+
+ONLY_DINO: true
+NO_PADDING: true # no padding for the input image and keypoints
+DINO_SIZE: 434
+LAYER: 11
+NUM_PATCHES_PRE: 31 # for extracting features
+NUM_PATCHES: 60 # for evaluation
+
+WEIGHTS: "./checkpoints/distilled_us.ckpt"
+LORA_LAYERS: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+LORA_RANK: 8
