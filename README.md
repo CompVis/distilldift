@@ -19,7 +19,7 @@
     </a>
 </p>
 
-## TLDR;
+## TL;DR
 We present DistillDIFT, a highly efficient approach to semantic correspondence that delivers state-of-the-art performance with 
 significantly reduced computational cost. Unlike traditional methods that combine multiple large generative models, 
 DistillDIFT uses a novel distillation technique to unify the strengths of two vision foundation models into a single, 
